@@ -41,12 +41,6 @@ cd fiapx-infra
 docker compose up --build
 ```
 
-> Persistência segue **database-per-service**: apenas a `fiapx-api` usa banco (Postgres). O worker
-> e a notificação são stateless. Por isso o schema (`init.sql`) mora no repo `fiapx-api` e é apenas
-> montado no container do Postgres por este compose.
-
-> Instruções detalhadas serão adicionadas conforme os serviços forem implementados.
-
 ## Documentação
 
 - [Linguagem ubíqua (DDD)](docs/linguagem-ubiqua.md)
