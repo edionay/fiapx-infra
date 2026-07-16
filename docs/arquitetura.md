@@ -2,8 +2,8 @@
 
 ## O problema
 
-O projeto original era um monólito: uma única aplicação recebia o vídeo, extraía os frames e
-devolvia o `.zip` **na mesma requisição**. Isso trazia três limitações sérias:
+A versão anterior do sistema era um monólito: uma única aplicação recebia o vídeo, extraía os
+frames e devolvia o `.zip` **na mesma requisição**. Isso trazia três limitações sérias:
 
 - O usuário ficava esperando o processamento inteiro (que pode levar minutos).
 - Em um pico de envios, a aplicação tentava processar tudo ao mesmo tempo e derrubava requisições.
@@ -129,8 +129,9 @@ Cada serviço é organizado em `dominio` → `aplicacao` → `adaptadores`. Ver 
 - Serviços **stateless** e configurados por variáveis de ambiente.
 - O processamento escala horizontalmente aumentando o número de workers, que competem pela mesma
   fila: `docker compose up --scale worker=3`.
-- O projeto nasce **k8s-ready**: migrar para Kubernetes significa escrever os manifests
+- O sistema é **k8s-ready**: migrar para Kubernetes significa escrever os manifests
   (`Deployment`, `Service`, `HPA`, probes) e trocar o volume compartilhado por object storage.
+  Ver [Limitações conhecidas](limitacoes-conhecidas.md).
 
 ## Armazenamento
 

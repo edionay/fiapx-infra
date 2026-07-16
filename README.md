@@ -46,5 +46,6 @@ docker compose up --build
 - [Linguagem ubíqua (DDD)](docs/linguagem-ubiqua.md)
 - [Arquitetura](docs/arquitetura.md)
 - [LGPD](docs/lgpd.md)
+- [Limitações conhecidas](docs/limitacoes-conhecidas.md)
 - Cenários BDD: `docs/bdd/`
 - Registros de decisão (ADR): `docs/adr/`
