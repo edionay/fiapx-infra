@@ -41,6 +41,25 @@ cd fiapx-infra
 docker compose up --build
 ```
 
+## Desenvolvimento
+
+Este repositório bloqueia **commits diretos na branch `main`** por meio de um hook versionado em
+`.githooks/pre-commit`. Como o Git não ativa hooks versionados automaticamente, após clonar rode
+uma vez:
+
+```bash
+sh scripts/ativar-hooks.sh
+```
+
+ou, de forma equivalente:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+A partir daí, o trabalho é feito em uma branch (`git switch -c minha-branch`) e integrado à `main`
+por pull request. Para uma exceção pontual existe o `git commit --no-verify`.
+
 ## Documentação
 
 - [Linguagem ubíqua (DDD)](docs/linguagem-ubiqua.md)
