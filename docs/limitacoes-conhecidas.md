@@ -34,7 +34,7 @@ Complementa a [nota de privacidade](lgpd.md).
 
 | Limitação | Impacto | Encaminhamento |
 |---|---|---|
-| Sem **retry** nem **dead-letter queue** | Uma mensagem que falha pode ser descartada ou reprocessada em laço, sem lugar para inspeção | Política de retry com backoff + DLQ para as mensagens que esgotarem as tentativas |
+| Sem **reprocessamento automático de falhas** | Quando o processamento falha, o erro é registrado e o usuário avisado, mas o sistema não tenta de novo sozinho | Repetir a tentativa automaticamente e separar os casos que falham várias vezes para análise |
 | **Processamento não idempotente** | A entrega é *at-least-once*: se a mesma mensagem chegar duas vezes, o vídeo é processado duas vezes | Descartar o pedido quando o vídeo já saiu de `PENDENTE`, ou usar chave de idempotência |
 | **Postgres sem réplica nem backup** | Ponto único de falha; perda do volume significa perda dos dados | Réplica de leitura, backup periódico e teste de restauração |
 
