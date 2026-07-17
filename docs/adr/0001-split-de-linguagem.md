@@ -24,7 +24,7 @@ Adotar **duas linguagens**, cada uma onde tem mais valor:
   de `ffmpeg` + `zip`. Go é forte para esse tipo de trabalho intensivo em CPU e I/O.
 - **Node + TypeScript** em todo o **código novo** de aplicação (`fiapx-api`, `fiapx-notificacao`),
   onde o ecossistema oferece produtividade para APIs, geração de documentação (TSOA/OpenAPI),
-  integração com fila, banco, SMTP e a equipe estavva familiriazada com a criação de APIs com essa stack.
+  integração com fila, banco, SMTP e a equipe estava familiarizada com a criação de APIs com essa stack.
 - **React + TypeScript** na **interface** (`fiapx-frontend`).
 
 Os serviços são independentes e se comunicam por mensagens JSON, então a diferença de linguagem
