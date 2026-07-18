@@ -1,0 +1,13 @@
+#!/bin/sh
+
+branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
+
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+	echo "Commit direto na branch '$branch' esta bloqueado."
+	echo "Crie uma branch de trabalho antes de commitar:"
+	echo "    git switch -c minha-branch"
+	echo "Excecao pontual (use com cuidado): git commit --no-verify"
+	exit 1
+fi
+
+exit 0

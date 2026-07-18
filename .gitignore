@@ -1,0 +1,14 @@
+# Variáveis de ambiente
+.env
+*.env
+
+# Dados montados em volume (vídeos e zips)
+data/
+dados/
+
+# Sistema operacional
+.DS_Store
+
+# Logs
+*.log
+.idea/
