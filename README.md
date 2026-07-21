@@ -4,9 +4,12 @@ Repositório de infraestrutura e documentação do Sistema de Processamento de V
 
 Reúne o que amarra os microsserviços do projeto:
 
-- **Orquestração:** `docker-compose.yml` que sobe toda a stack (Postgres, Redis, RabbitMQ,
-  Mailhog, Prometheus, Grafana) e os serviços de aplicação.
-- **Monitoramento:** configuração do Prometheus e provisionamento do Grafana.
+- **Orquestração:** `docker-compose.yml` que sobe a stack. Hoje já traz o **backbone de
+  mensageria** (RabbitMQ), o **Postgres** e a **api**, com um **volume compartilhado** montado
+  em `/data`. Os demais serviços (worker, notificacao, frontend) e a observabilidade entram
+  conforme cada um é construído.
+- **Contratos de fila** (`docs/contratos-fila.md`): a fonte da verdade das mensagens trocadas
+  entre os serviços.
 - **Documentação** (`docs/`): linguagem ubíqua (DDD), arquitetura, cenários BDD, registros de
   decisão (ADR) e nota de LGPD.
 
@@ -41,6 +44,10 @@ cd fiapx-infra
 docker compose up --build
 ```
 
+Sobe agora: **RabbitMQ** (AMQP em `5672`, painel de management em
+[localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`), **Postgres** (`5432`)
+e a **api** (`3000`, Swagger em `/docs`), com as migrações aplicadas antes da api iniciar.
+
 ## Desenvolvimento
 
 Este repositório bloqueia **commits diretos na branch `main`** por meio de um hook versionado em
@@ -64,6 +71,7 @@ por pull request. Para uma exceção pontual existe o `git commit --no-verify`.
 
 - [Linguagem ubíqua (DDD)](docs/linguagem-ubiqua.md)
 - [Arquitetura](docs/arquitetura.md)
+- [Contratos de fila](docs/contratos-fila.md)
 - [LGPD](docs/lgpd.md)
 - [Limitações conhecidas](docs/limitacoes-conhecidas.md)
 - Cenários BDD: `docs/bdd/`
