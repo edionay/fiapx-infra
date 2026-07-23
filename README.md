@@ -55,9 +55,9 @@ aplicadas antes da api iniciar. O worker e a notificacao consomem suas filas e e
 **Mailpit**, com a caixa de entrada em [localhost:8025](http://localhost:8025).
 
 A observabilidade sobe junto: o **Prometheus** ([localhost:9090](http://localhost:9090)) raspa o
-`/metrics` da api e do worker, e o **Grafana** ([localhost:3001](http://localhost:3001),
-usuário/senha `admin`/`admin`) já vem com a fonte de dados e os dashboards da api e do worker
-provisionados. A notificacao entra no scrape em seguida.
+`/metrics` da api, do worker e da notificacao, e o **Grafana**
+([localhost:3001](http://localhost:3001), usuário/senha `admin`/`admin`) já vem com a fonte de
+dados e um dashboard de cada serviço provisionados.
 
 ## Desenvolvimento
 
