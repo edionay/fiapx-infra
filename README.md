@@ -5,9 +5,9 @@ Repositório de infraestrutura e documentação do Sistema de Processamento de V
 Reúne o que amarra os microsserviços do projeto:
 
 - **Orquestração:** `docker-compose.yml` que sobe a stack. Hoje já traz o **backbone de
-  mensageria** (RabbitMQ), o **Postgres** e a **api**, com um **volume compartilhado** montado
-  em `/data`. Os demais serviços (worker, notificacao, frontend) e a observabilidade entram
-  conforme cada um é construído.
+  mensageria** (RabbitMQ), o **Postgres**, a **api** e o **worker**, com um **volume
+  compartilhado** montado em `/data`. Os demais serviços (notificacao, frontend) e a
+  observabilidade entram conforme cada um é construído.
 - **Contratos de fila** (`docs/contratos-fila.md`): a fonte da verdade das mensagens trocadas
   entre os serviços.
 - **Documentação** (`docs/`): linguagem ubíqua (DDD), arquitetura, cenários BDD, registros de
@@ -45,8 +45,10 @@ docker compose up --build
 ```
 
 Sobe agora: **RabbitMQ** (AMQP em `5672`, painel de management em
-[localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`), **Postgres** (`5432`)
-e a **api** (`3000`, Swagger em `/docs`), com as migrações aplicadas antes da api iniciar.
+[localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`), **Postgres** (`5432`),
+a **api** (`3000`, Swagger em `/docs`) e o **worker**, com as migrações aplicadas antes da api
+iniciar. O worker consome a fila de processamento e expõe métricas em `9091` dentro da rede do
+Compose, sem porta publicada no host.
 
 ## Desenvolvimento
 
