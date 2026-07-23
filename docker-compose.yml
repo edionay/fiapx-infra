@@ -42,6 +42,19 @@ services:
       postgres:
         condition: service_healthy
 
+  worker:
+    build:
+      context: ../fiapx-worker
+    environment:
+      RABBITMQ_URL: amqp://fiapx:fiapx@rabbitmq:5672
+      OUTPUTS_DIR: /data/outputs
+      METRICS_ADDR: ":9091"
+    volumes:
+      - dados:/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
   api:
     build:
       context: ../fiapx-api
