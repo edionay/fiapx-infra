@@ -99,6 +99,16 @@ services:
       migrate:
         condition: service_completed_successfully
 
+  frontend:
+    build:
+      context: ../fiapx-frontend
+      args:
+        VITE_API_URL: http://localhost:3000
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
   prometheus:
     image: prom/prometheus:v2.55.1
     volumes:

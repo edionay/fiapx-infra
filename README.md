@@ -4,11 +4,11 @@ Repositório de infraestrutura e documentação do Sistema de Processamento de V
 
 Reúne o que amarra os microsserviços do projeto:
 
-- **Orquestração:** `docker-compose.yml` que sobe a stack. Hoje já traz o **backbone de
-  mensageria** (RabbitMQ), o **Postgres**, a **api**, o **worker** e a **notificacao** (com um
-  **Mailpit** de caixa de correio para desenvolvimento), com um **volume compartilhado** montado
-  em `/data`. A **observabilidade** (Prometheus e Grafana) já sobe raspando a **api**, e os demais
-  serviços entram um a um.
+- **Orquestração:** `docker-compose.yml` que sobe a stack completa: o **backbone de mensageria**
+  (RabbitMQ), o **Postgres**, a **api**, o **worker**, a **notificacao** (com um **Mailpit** de
+  caixa de correio para desenvolvimento) e o **frontend**, com um **volume compartilhado** montado
+  em `/data`. A **observabilidade** (Prometheus e Grafana) sobe junto, raspando a api, o worker e a
+  notificacao.
 - **Observabilidade** (`monitoring/`): configuração do Prometheus e o provisionamento do Grafana
   (fonte de dados e dashboards).
 - **Contratos de fila** (`docs/contratos-fila.md`): a fonte da verdade das mensagens trocadas
@@ -23,7 +23,7 @@ Reúne o que amarra os microsserviços do projeto:
 | `fiapx-api` | Autenticação, upload, status e download | Node + TypeScript (TSOA/Swagger) |
 | `fiapx-worker` | Processamento do vídeo (ffmpeg + zip) | Go |
 | `fiapx-notificacao` | Envio de e-mail em caso de erro | Node + TypeScript |
-| `fiapx-frontend` | Interface web | React + Tailwind |
+| `fiapx-frontend` | Interface web | Vue + Tailwind (Nginx) |
 | `fiapx-infra` | Infraestrutura e documentação | Docker Compose |
 
 ## Como rodar
@@ -47,12 +47,13 @@ cd fiapx-infra
 docker compose up --build
 ```
 
-Sobe agora: **RabbitMQ** (AMQP em `5672`, painel de management em
-[localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`), **Postgres** (`5432`),
-a **api** (`3000`, Swagger em `/docs`), o **worker** e a **notificacao**, com as migrações
-aplicadas antes da api iniciar. O worker e a notificacao consomem suas filas e expõem métricas em
-`9091` dentro da rede do Compose, sem porta publicada no host. Os e-mails de falha caem no
-**Mailpit**, com a caixa de entrada em [localhost:8025](http://localhost:8025).
+Sobe agora: o **frontend** ([localhost:8080](http://localhost:8080)), **RabbitMQ** (AMQP em `5672`,
+painel de management em [localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`),
+**Postgres** (`5432`), a **api** (`3000`, Swagger em `/docs`), o **worker** e a **notificacao**,
+com as migrações aplicadas antes da api iniciar. O frontend é servido por Nginx e aponta para a api
+em `localhost:3000`. O worker e a notificacao consomem suas filas e expõem métricas em `9091`
+dentro da rede do Compose, sem porta publicada no host. Os e-mails de falha caem no **Mailpit**,
+com a caixa de entrada em [localhost:8025](http://localhost:8025).
 
 A observabilidade sobe junto: o **Prometheus** ([localhost:9090](http://localhost:9090)) raspa o
 `/metrics` da api, do worker e da notificacao, e o **Grafana**
