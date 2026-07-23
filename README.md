@@ -5,9 +5,10 @@ Repositório de infraestrutura e documentação do Sistema de Processamento de V
 Reúne o que amarra os microsserviços do projeto:
 
 - **Orquestração:** `docker-compose.yml` que sobe a stack. Hoje já traz o **backbone de
-  mensageria** (RabbitMQ), o **Postgres**, a **api** e o **worker**, com um **volume
-  compartilhado** montado em `/data`. Os demais serviços (notificacao, frontend) e a
-  observabilidade entram conforme cada um é construído.
+  mensageria** (RabbitMQ), o **Postgres**, a **api**, o **worker** e a **notificacao** (com um
+  **Mailpit** de caixa de correio para desenvolvimento), com um **volume compartilhado** montado
+  em `/data`. Os demais serviços (frontend) e a observabilidade entram conforme cada um é
+  construído.
 - **Contratos de fila** (`docs/contratos-fila.md`): a fonte da verdade das mensagens trocadas
   entre os serviços.
 - **Documentação** (`docs/`): linguagem ubíqua (DDD), arquitetura, cenários BDD, registros de
@@ -46,9 +47,10 @@ docker compose up --build
 
 Sobe agora: **RabbitMQ** (AMQP em `5672`, painel de management em
 [localhost:15672](http://localhost:15672), usuário/senha `fiapx`/`fiapx`), **Postgres** (`5432`),
-a **api** (`3000`, Swagger em `/docs`) e o **worker**, com as migrações aplicadas antes da api
-iniciar. O worker consome a fila de processamento e expõe métricas em `9091` dentro da rede do
-Compose, sem porta publicada no host.
+a **api** (`3000`, Swagger em `/docs`), o **worker** e a **notificacao**, com as migrações
+aplicadas antes da api iniciar. O worker e a notificacao consomem suas filas e expõem métricas em
+`9091` dentro da rede do Compose, sem porta publicada no host. Os e-mails de falha caem no
+**Mailpit**, com a caixa de entrada em [localhost:8025](http://localhost:8025).
 
 ## Desenvolvimento
 

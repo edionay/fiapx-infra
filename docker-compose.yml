@@ -31,6 +31,11 @@ services:
       timeout: 10s
       retries: 10
 
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"
+
   migrate:
     build:
       context: ../fiapx-api
@@ -54,6 +59,21 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+
+  notificacao:
+    build:
+      context: ../fiapx-notificacao
+    environment:
+      RABBITMQ_URL: amqp://fiapx:fiapx@rabbitmq:5672
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      EMAIL_REMETENTE: nao-responda@fiapx.local
+      METRICS_PORT: "9091"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
 
   api:
     build:
