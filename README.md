@@ -7,8 +7,10 @@ Reúne o que amarra os microsserviços do projeto:
 - **Orquestração:** `docker-compose.yml` que sobe a stack. Hoje já traz o **backbone de
   mensageria** (RabbitMQ), o **Postgres**, a **api**, o **worker** e a **notificacao** (com um
   **Mailpit** de caixa de correio para desenvolvimento), com um **volume compartilhado** montado
-  em `/data`. Os demais serviços (frontend) e a observabilidade entram conforme cada um é
-  construído.
+  em `/data`. A **observabilidade** (Prometheus e Grafana) já sobe raspando a **api**, e os demais
+  serviços entram um a um.
+- **Observabilidade** (`monitoring/`): configuração do Prometheus e o provisionamento do Grafana
+  (fonte de dados e dashboards).
 - **Contratos de fila** (`docs/contratos-fila.md`): a fonte da verdade das mensagens trocadas
   entre os serviços.
 - **Documentação** (`docs/`): linguagem ubíqua (DDD), arquitetura, cenários BDD, registros de
@@ -51,6 +53,11 @@ a **api** (`3000`, Swagger em `/docs`), o **worker** e a **notificacao**, com as
 aplicadas antes da api iniciar. O worker e a notificacao consomem suas filas e expõem métricas em
 `9091` dentro da rede do Compose, sem porta publicada no host. Os e-mails de falha caem no
 **Mailpit**, com a caixa de entrada em [localhost:8025](http://localhost:8025).
+
+A observabilidade sobe junto: o **Prometheus** ([localhost:9090](http://localhost:9090)) raspa o
+`/metrics` da api, e o **Grafana** ([localhost:3001](http://localhost:3001), usuário/senha
+`admin`/`admin`) já vem com a fonte de dados e um dashboard da api provisionados. O worker e a
+notificacao entram no scrape em seguida.
 
 ## Desenvolvimento
 
